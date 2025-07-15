@@ -1,9 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.jenkins-ci.plugins</groupId>
+        <artifactId>plugin</artifactId>
+        <version>4.61</version> <!-- Update to latest if needed -->
+        <relativePath/>
+    </parent>
 
     <groupId>com.example.jenkins</groupId>
     <artifactId>docker-plugin</artifactId>
@@ -15,13 +21,13 @@
     <url>https://your-plugin-homepage</url>
 
     <properties>
-        <java.version>11</java.version> <!-- Set to 17 if you're using Java 17 -->
+        <java.version>11</java.version> <!-- Use 17 if you're on Java 17 -->
         <jenkins.version>2.426.1</jenkins.version>
         <docker-java.version>3.3.4</docker-java.version>
     </properties>
 
     <dependencies>
-        <!-- Jenkins Plugin API -->
+        <!-- Jenkins Core API -->
         <dependency>
             <groupId>org.jenkins-ci.main</groupId>
             <artifactId>jenkins-core</artifactId>
@@ -29,33 +35,31 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Jenkins Structs Plugin -->
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>structs</artifactId>
             <version>324.v4b_38e4d1a_78f</version>
         </dependency>
 
-        <!-- Docker Java client -->
+        <!-- Docker Java Client -->
         <dependency>
             <groupId>com.github.docker-java</groupId>
             <artifactId>docker-java</artifactId>
             <version>${docker-java.version}</version>
         </dependency>
-
         <dependency>
             <groupId>com.github.docker-java</groupId>
             <artifactId>docker-java-transport-httpclient5</artifactId>
             <version>${docker-java.version}</version>
         </dependency>
 
-        <!-- SLF4J Logging (Jenkins typically provides a binding already) -->
+        <!-- SLF4J Logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>2.0.13</version>
         </dependency>
-
-        <!-- Optional: if running standalone or for tests -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
@@ -63,7 +67,7 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- JUnit for tests -->
+        <!-- JUnit -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -74,8 +78,7 @@
 
     <build>
         <plugins>
-
-            <!-- Jenkins Plugin Plugin -->
+            <!-- Jenkins HPI Plugin -->
             <plugin>
                 <groupId>org.jenkins-ci.tools</groupId>
                 <artifactId>maven-hpi-plugin</artifactId>
@@ -97,13 +100,12 @@
                 </configuration>
             </plugin>
 
-            <!-- Surefire Plugin for unit testing -->
+            <!-- Maven Surefire Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
             </plugin>
-
         </plugins>
     </build>
 
@@ -113,5 +115,12 @@
             <url>https://repo.jenkins-ci.org/releases/</url>
         </repository>
     </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jenkins-ci-plugin-releases</id>
+            <url>https://repo.jenkins-ci.org/releases/</url>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>
