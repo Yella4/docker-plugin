@@ -4,12 +4,12 @@
                              https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <!-- Jenkins “plugin” parent: gives you the hpi packaging, maven‑hpi‑plugin, BOM, etc. -->
+  <!-- Jenkins Plugin Parent POM -->
   <parent>
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>4.87</version>   <!-- latest as of Jul‑2025 -->
-    <relativePath/>
+    <version>4.87</version>
+    <relativePath/> <!-- Use Jenkins plugin BOM -->
   </parent>
 
   <groupId>com.example.jenkins</groupId>
@@ -17,60 +17,31 @@
   <version>1.0.0</version>
   <packaging>hpi</packaging>
   <name>Modern Docker Plugin</name>
-  <description>A modern Jenkins plugin for Docker integration</description>
+  <description>A Jenkins plugin for Docker integration using modern practices.</description>
+  <url>https://github.com/example/docker-plugin-modern</url>
 
-  <!-- Baseline Jenkins core you want to support -->
   <properties>
-    <jenkins.version>2.440.3</jenkins.version>   <!-- satisfies json‑path‑api ≥ 2.401.3 -->
-    <java.level>11</java.level>                  <!-- parent enforces compiler plugin -->
+    <jenkins.version>2.440.3</jenkins.version>
+    <java.level>11</java.level>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
-  <!-- Your plugin dependencies (explicit versions still required) -->
   <dependencies>
+    <!-- Jenkins Plugin Dependencies -->
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>ssh-slaves</artifactId>
       <version>1.31.0</version>
     </dependency>
+
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>token-macro</artifactId>
       <version>400.v35420b_922dcb_</version>
       <optional>true</optional>
     </dependency>
+
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
       <artifactId>json-path-api</artifactId>
-      <version>2.8.0-5.v07cb_a_1ca_738c</version>
-    </dependency>
-
-    <!-- Unit‑test stack -->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>5.11.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.11.0</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-
-  <!-- Jenkins public repo for plugins **and** build extensions -->
-  <repositories>
-    <repository>
-      <id>jenkins-public</id>
-      <url>https://repo.jenkins-ci.org/public/</url>
-    </repository>
-  </repositories>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <id>jenkins-public</id>
-      <url>https://repo.jenkins-ci.org/public/</url>
-    </pluginRepository>
-  </pluginRepositories>
-</project>
+      <version>2.8.0-5.v07c
