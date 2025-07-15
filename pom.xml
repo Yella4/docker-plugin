@@ -1,150 +1,109 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.jenkins-ci.plugins</groupId>
-        <artifactId>plugin</artifactId>
-        <version>4.61</version> <!-- Update to latest if needed -->
-        <relativePath/>
-    </parent>
+  <groupId>com.nirima.jenkins.plugins</groupId>
+  <artifactId>docker-plugin</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>hpi</packaging>
 
-    <groupId>com.example.jenkins</groupId>
-    <artifactId>docker-plugin</artifactId>
-    <version>1.0.0</version>
-    <packaging>hpi</packaging>
+  <name>Jenkins Docker Plugin</name>
 
-    <name>docker-plugin</name>
-    <description>Jenkins Docker plugin using docker-java</description>
-    <url>https://your-plugin-homepage</url>
+  <properties>
+    <jenkins.version>2.452</jenkins.version>
+    <java.level>11</java.level>
+    <docker-java.version>3.3.6</docker-java.version>
+  </properties>
 
-    <properties>
-        <java.version>11</java.version> <!-- Use 17 if you're on Java 17 -->
-        <jenkins.version>2.426.1</jenkins.version>
-        <docker-java.version>3.3.4</docker-java.version>
-    </properties>
+  <parent>
+    <groupId>org.jenkins-ci.plugins</groupId>
+    <artifactId>plugin</artifactId>
+    <version>4.82</version>
+    <relativePath/>
+  </parent>
 
   <dependencies>
-  <!-- Jenkins Core API -->
-  <dependency>
-    <groupId>org.jenkins-ci.main</groupId>
-    <artifactId>jenkins-core</artifactId>
-    <version>${jenkins.version}</version>
-    <scope>provided</scope>
-  </dependency>
+    <!-- Jenkins core and basic dependencies -->
+    <dependency>
+      <groupId>org.jenkins-ci.main</groupId>
+      <artifactId>jenkins-core</artifactId>
+      <scope>provided</scope>
+    </dependency>
 
-  <!-- Structs -->
-  <dependency>
-    <groupId>org.jenkins-ci.plugins</groupId>
-    <artifactId>structs</artifactId>
-  </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>structs</artifactId>
+    </dependency>
 
-  <!-- Token Macro -->
-  <dependency>
-    <groupId>org.jenkins-ci.plugins</groupId>
-    <artifactId>token-macro</artifactId>
-  </dependency>
+    <!-- Token Macro -->
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>token-macro</artifactId>
+    </dependency>
 
-  <!-- Credentials -->
-  <dependency>
-    <groupId>com.cloudbees.plugins</groupId>
-    <artifactId>credentials</artifactId>
-  </dependency>
+    <!-- Credentials API -->
+    <dependency>
+      <groupId>com.cloudbees.plugins</groupId>
+      <artifactId>credentials</artifactId>
+    </dependency>
 
-  <!-- SSH Credentials -->
-  <dependency>
-    <groupId>com.cloudbees.jenkins.plugins</groupId>
-    <artifactId>ssh-credentials</artifactId>
-  </dependency>
+    <!-- SSH Credentials -->
+    <dependency>
+      <groupId>com.cloudbees.jenkins.plugins</groupId>
+      <artifactId>ssh-credentials</artifactId>
+    </dependency>
 
-  <!-- SSH Launcher support -->
-  <dependency>
-    <groupId>hudson.plugins</groupId>
-    <artifactId>ssh-slaves</artifactId>
-  </dependency>
+    <!-- SSH Slaves (for SSHLauncher, etc.) -->
+    <dependency>
+      <groupId>hudson.plugins</groupId>
+      <artifactId>ssh-slaves</artifactId>
+    </dependency>
 
-  <!-- Docker Java client -->
-  <dependency>
-    <groupId>com.github.docker-java</groupId>
-    <artifactId>docker-java</artifactId>
-    <version>${docker-java.version}</version>
-  </dependency>
-  <dependency>
-    <groupId>com.github.docker-java</groupId>
-    <artifactId>docker-java-transport-httpclient5</artifactId>
-    <version>${docker-java.version}</version>
-  </dependency>
+    <!-- Docker Java client -->
+    <dependency>
+      <groupId>com.github.docker-java</groupId>
+      <artifactId>docker-java</artifactId>
+      <version>${docker-java.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.docker-java</groupId>
+      <artifactId>docker-java-transport-httpclient5</artifactId>
+      <version>${docker-java.version}</version>
+    </dependency>
 
-  <!-- SLF4J -->
-  <dependency>
-    <groupId>org.slf4j</groupId>
-    <artifactId>slf4j-api</artifactId>
-    <version>2.0.13</version>
-  </dependency>
-  <dependency>
-    <groupId>org.slf4j</groupId>
-    <artifactId>slf4j-simple</artifactId>
-    <version>2.0.13</version>
-    <scope>runtime</scope>
-  </dependency>
+    <!-- SLF4J Logging -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>2.0.13</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>2.0.13</version>
+      <scope>runtime</scope>
+    </dependency>
 
-  <!-- JUnit -->
-  <dependency>
-    <groupId>junit</groupId>
-    <artifactId>junit</artifactId>
-    <version>4.13.2</version>
-    <scope>test</scope>
-  </dependency>
-</dependencies>
+    <!-- JUnit -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 
-
-    <build>
-        <plugins>
-            <!-- Jenkins HPI Plugin -->
-            <plugin>
-                <groupId>org.jenkins-ci.tools</groupId>
-                <artifactId>maven-hpi-plugin</artifactId>
-                <version>3.59</version>
-                <configuration>
-                    <compatibleSinceVersion>1.0.0</compatibleSinceVersion>
-                </configuration>
-            </plugin>
-
-            <!-- Maven Compiler Plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-
-            <!-- Maven Surefire Plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.5</version>
-            </plugin>
-        </plugins>
-    </build>
-
-    <repositories>
-        <repository>
-            <id>jenkins-releases</id>
-            <url>https://repo.jenkins-ci.org/releases/</url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>jenkins-ci-plugin-releases</id>
-            <url>https://repo.jenkins-ci.org/releases/</url>
-        </pluginRepository>
-    </pluginRepositories>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.jenkins-ci.tools</groupId>
+        <artifactId>maven-hpi-plugin</artifactId>
+        <version>3.39</version>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
