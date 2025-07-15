@@ -26,6 +26,7 @@
   </properties>
 
   <dependencies>
+    <!-- Jenkins plugin dependencies -->
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>ssh-slaves</artifactId>
@@ -43,6 +44,20 @@
       <groupId>io.jenkins.plugins</groupId>
       <artifactId>json-path-api</artifactId>
       <version>2.8.0-5.v07cb_a_1ca_738c</version>
+    </dependency>
+
+    <!-- Docker Java: replaces com.nirima.docker.client -->
+    <dependency>
+      <groupId>com.github.docker-java</groupId>
+      <artifactId>docker-java</artifactId>
+      <version>3.2.13</version>
+    </dependency>
+
+    <!-- Apache HTTP Client (used by docker-java) -->
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.14</version>
     </dependency>
 
     <!-- Unit Testing -->
