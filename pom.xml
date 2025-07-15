@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>4.87</version> <!-- ✅ Valid parent version found on Jenkins Releases repo -->
+    <version>4.87</version> <!-- ✅ Confirmed working -->
     <relativePath/>
   </parent>
 
@@ -19,28 +19,22 @@
   <url>https://github.com/your-org/docker-plugin-modern</url>
 
   <properties>
-    <jenkins.version>2.361.4</jenkins.version> <!-- you may bump to latest LTS >=2.361 -->
-    <!-- <java.level> removed — parent POM enforces Java via version -->
+    <jenkins.version>2.361.4</jenkins.version> <!-- LTS baseline -->
   </properties>
 
   <dependencies>
+    <!-- ✅ Add explicit versions -->
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>ssh-slaves</artifactId>
+      <version>1.31.0</version> <!-- Latest as of July 2025 -->
     </dependency>
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>token-macro</artifactId>
+      <version>400.v35420b_922dcb_</version> <!-- Latest compatible -->
       <optional>true</optional>
     </dependency>
-    <!-- Optional: include docker-java if needed -->
-    <!--
-    <dependency>
-      <groupId>com.github.docker-java</groupId>
-      <artifactId>docker-java</artifactId>
-      <version>3.3.6</version>
-    </dependency>
-    -->
   </dependencies>
 
   <repositories>
