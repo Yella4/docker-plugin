@@ -1,41 +1,32 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
+  <!-- Jenkins “plugin” parent: gives you the hpi packaging, maven‑hpi‑plugin, BOM, etc. -->
+  <parent>
+    <groupId>org.jenkins-ci.plugins</groupId>
+    <artifactId>plugin</artifactId>
+    <version>4.87</version>   <!-- latest as of Jul‑2025 -->
+    <relativePath/>
+  </parent>
 
   <groupId>com.example.jenkins</groupId>
   <artifactId>docker-plugin-modern</artifactId>
   <version>1.0.0</version>
   <packaging>hpi</packaging>
-
   <name>Modern Docker Plugin</name>
   <description>A modern Jenkins plugin for Docker integration</description>
-  <url>http://example.com/jenkins-docker-plugin</url>
 
+  <!-- Baseline Jenkins core you want to support -->
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
-    <jenkins.version>2.440.3</jenkins.version>
-    <java.level>11</java.level>
-    <hpi.plugin.version>3.57</hpi.plugin.version>
+    <jenkins.version>2.440.3</jenkins.version>   <!-- satisfies json‑path‑api ≥ 2.401.3 -->
+    <java.level>11</java.level>                  <!-- parent enforces compiler plugin -->
   </properties>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.jenkins-ci.main</groupId>
-        <artifactId>jenkins-bom</artifactId>
-        <version>${jenkins.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
+  <!-- Your plugin dependencies (explicit versions still required) -->
   <dependencies>
-    <!-- Required Jenkins plugin dependencies with versions -->
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>ssh-slaves</artifactId>
@@ -44,17 +35,16 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>token-macro</artifactId>
-      <version>332.v889e1a_b_79e12</version>
+      <version>400.v35420b_922dcb_</version>
+      <optional>true</optional>
     </dependency>
-
-    <!-- Useful Jenkins plugin APIs -->
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
       <artifactId>json-path-api</artifactId>
       <version>2.8.0-5.v07cb_a_1ca_738c</version>
     </dependency>
 
-    <!-- Optional: JUnit 5 for testing -->
+    <!-- Unit‑test stack -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
@@ -69,60 +59,18 @@
     </dependency>
   </dependencies>
 
-  <build>
-    <plugins>
-      <!-- Core Jenkins Plugin Build -->
-      <plugin>
-        <groupId>org.jenkins-ci.tools</groupId>
-        <artifactId>maven-hpi-plugin</artifactId>
-        <version>${hpi.plugin.version}</version>
-        <extensions>true</extensions>
-        <configuration>
-          <compatibleSinceVersion>1.0.0</compatibleSinceVersion>
-          <javaLevel>${java.level}</javaLevel>
-        </configuration>
-      </plugin>
+  <!-- Jenkins public repo for plugins **and** build extensions -->
+  <repositories>
+    <repository>
+      <id>jenkins-public</id>
+      <url>https://repo.jenkins-ci.org/public/</url>
+    </repository>
+  </repositories>
 
-      <!-- Enforce Java version -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.4.1</version>
-        <executions>
-          <execution>
-            <id>enforce-java</id>
-            <goals>
-              <goal>enforce</goal>
-            </goals>
-            <configuration>
-              <rules>
-                <requireJavaVersion>
-                  <version>[11,)</version>
-                </requireJavaVersion>
-              </rules>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <!-- Compiler plugin -->
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.11.0</version>
-        <configuration>
-          <source>${maven.compiler.source}</source>
-          <target>${maven.compiler.target}</target>
-        </configuration>
-      </plugin>
-
-      <!-- Surefire for running unit tests -->
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.2.5</version>
-        <configuration>
-          <useModulePath>false</useModulePath>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>jenkins-public</id>
+      <url>https://repo.jenkins-ci.org/public/</url>
+    </pluginRepository>
+  </pluginRepositories>
 </project>
