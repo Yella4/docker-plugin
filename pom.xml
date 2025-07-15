@@ -2,10 +2,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+                             
   <modelVersion>4.0.0</modelVersion>
 
-  <!-- Project coordinates -->
+  <parent>
+    <groupId>org.jenkins-ci.plugins</groupId>
+    <artifactId>plugin</artifactId>
+    <version>4.82</version>
+    <relativePath/>
+  </parent>
+
   <groupId>com.nirima.jenkins.plugins</groupId>
   <artifactId>docker-plugin</artifactId>
   <version>1.0-SNAPSHOT</version>
@@ -14,15 +20,13 @@
   <name>Jenkins Docker Plugin</name>
   <url>https://github.com/jglick/docker-plugin</url>
 
-  <!-- Use official Jenkins plugin parent POM -->
-  <parent>
-    <groupId>org.jenkins-ci.plugins</groupId>
-    <artifactId>plugin</artifactId>
-    <version>4.82</version>
-    <relativePath/>
-  </parent>
+  <properties>
+    <java.level>11</java.level>
+    <jenkins.version>2.452</jenkins.version>
+    <docker-java.version>3.3.6</docker-java.version>
+    <slf4j.version>1.7.36</slf4j.version>
+  </properties>
 
-  <!-- Jenkins plugin repository (not in Maven Central) -->
   <repositories>
     <repository>
       <id>jenkins-public</id>
@@ -30,21 +34,20 @@
     </repository>
   </repositories>
 
-  <properties>
-    <java.level>11</java.level>
-    <jenkins.version>2.452</jenkins.version>
-    <docker-java.version>3.3.6</docker-java.version>
-  </properties>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>jenkins-public</id>
+      <url>https://repo.jenkins-ci.org/public/</url>
+    </pluginRepository>
+  </pluginRepositories>
 
   <dependencies>
-    <!-- Jenkins core API -->
     <dependency>
       <groupId>org.jenkins-ci.main</groupId>
       <artifactId>jenkins-core</artifactId>
       <scope>provided</scope>
     </dependency>
 
-    <!-- Docker Java client -->
     <dependency>
       <groupId>com.github.docker-java</groupId>
       <artifactId>docker-java</artifactId>
@@ -56,51 +59,53 @@
       <version>${docker-java.version}</version>
     </dependency>
 
-    <!-- Credentials and SSH integration -->
     <dependency>
       <groupId>com.cloudbees.plugins</groupId>
       <artifactId>credentials</artifactId>
+      <version>1271.v54b_1c2c6388a_</version>
     </dependency>
     <dependency>
       <groupId>com.cloudbees.jenkins.plugins</groupId>
       <artifactId>ssh-credentials</artifactId>
+      <version>305.v8f4381501156</version>
     </dependency>
     <dependency>
       <groupId>hudson.plugins</groupId>
       <artifactId>ssh-slaves</artifactId>
+      <version>2.946.vf955b_8f98f62</version>
     </dependency>
-
-    <!-- Token Macro plugin -->
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>token-macro</artifactId>
+      <version>384.vf35b_f26814ec</version>
     </dependency>
 
-    <!-- SLF4J for logging -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
+      <version>${slf4j.version}</version>
       <scope>runtime</scope>
     </dependency>
 
-    <!-- Testing -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
+      <version>4.13.2</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
 
   <build>
     <plugins>
-      <!-- Core HPI plugin defined by parent POM -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.11.0</version>
         <configuration>
           <source>${java.level}</source>
           <target>${java.level}</target>
