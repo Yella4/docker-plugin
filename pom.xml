@@ -2,75 +2,73 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>io.jenkins.plugins</groupId>
-        <artifactId>plugin</artifactId>
-        <version>4.67</version> <!-- ✅ Use valid version -->
-        <relativePath/> <!-- Required so Maven doesn't look for local POM -->
-    </parent>
+  <parent>
+    <groupId>org.jenkins-ci.plugins</groupId>
+    <artifactId>plugin</artifactId>
+    <version>4.87</version> <!-- ✅ Valid parent version found on Jenkins Releases repo -->
+    <relativePath/>
+  </parent>
 
-    <groupId>io.jenkins.plugins</groupId>
-    <artifactId>docker-plugin-modern</artifactId>
-    <version>1.0.0</version>
-    <packaging>hpi</packaging>
-    <name>Modern Docker Plugin</name>
+  <groupId>io.jenkins.plugins</groupId>
+  <artifactId>docker-plugin-modern</artifactId>
+  <version>1.0.0</version>
+  <packaging>hpi</packaging>
+  <name>Modern Docker Plugin</name>
+  <url>https://github.com/your-org/docker-plugin-modern</url>
+
+  <properties>
+    <jenkins.version>2.361.4</jenkins.version> <!-- you may bump to latest LTS >=2.361 -->
+    <!-- <java.level> removed — parent POM enforces Java via version -->
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>ssh-slaves</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>token-macro</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <!-- Optional: include docker-java if needed -->
+    <!--
+    <dependency>
+      <groupId>com.github.docker-java</groupId>
+      <artifactId>docker-java</artifactId>
+      <version>3.3.6</version>
+    </dependency>
+    -->
+  </dependencies>
+
+  <repositories>
+    <repository>
+      <id>jenkins-releases</id>
+      <url>https://repo.jenkins-ci.org/releases/</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>jenkins-releases</id>
+      <url>https://repo.jenkins-ci.org/releases/</url>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <scm>
+    <connection>scm:git:https://github.com/your-org/docker-plugin-modern.git</connection>
+    <developerConnection>scm:git:git@github.com:your-org/docker-plugin-modern.git</developerConnection>
     <url>https://github.com/your-org/docker-plugin-modern</url>
+    <tag>HEAD</tag>
+  </scm>
 
-    <properties>
-        <jenkins.version>2.387.2</jenkins.version> <!-- LTS baseline -->
-        <java.level>11</java.level> <!-- Use 11 or 17 depending on Jenkins baseline -->
-    </properties>
-
-    <dependencies>
-        <!-- Jenkins dependencies -->
-        <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>ssh-slaves</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>token-macro</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <!-- Optional: modern Docker Java client -->
-        <!-- 
-        <dependency>
-            <groupId>com.github.docker-java</groupId>
-            <artifactId>docker-java</artifactId>
-            <version>3.3.6</version>
-        </dependency>
-        -->
-    </dependencies>
-
-    <repositories>
-        <repository>
-            <id>jenkins-releases</id>
-            <url>https://repo.jenkins-ci.org/releases/</url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>jenkins-releases</id>
-            <url>https://repo.jenkins-ci.org/releases/</url>
-        </pluginRepository>
-    </pluginRepositories>
-
-    <scm>
-        <connection>scm:git:https://github.com/your-org/docker-plugin-modern.git</connection>
-        <developerConnection>scm:git:git@github.com:your-org/docker-plugin-modern.git</developerConnection>
-        <url>https://github.com/your-org/docker-plugin-modern</url>
-        <tag>HEAD</tag>
-    </scm>
-
-    <developers>
-        <developer>
-            <id>your-id</id>
-            <name>Your Name</name>
-            <email>you@example.com</email>
-        </developer>
-    </developers>
+  <developers>
+    <developer>
+      <id>your-id</id>
+      <name>Your Name</name>
+      <email>you@example.com</email>
+    </developer>
+  </developers>
 </project>
